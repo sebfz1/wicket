@@ -16,11 +16,13 @@
  */
 package org.apache.wicket.ajax.markup.html;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.IGenericComponent;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.link.AbstractLink;
 import org.apache.wicket.model.IModel;
 
@@ -79,6 +81,15 @@ public abstract class AjaxLink<T> extends AbstractLink implements IAjaxLink, IGe
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				if (isLinkEnabled())
+				{		
+					super.renderHead(component, response);
+				}
+			}
+
+			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				onClick(target);
@@ -102,7 +113,7 @@ public abstract class AjaxLink<T> extends AbstractLink implements IAjaxLink, IGe
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy())
+		if (isLinkEnabled())
 		{
 			String tagName = tag.getName();
 			

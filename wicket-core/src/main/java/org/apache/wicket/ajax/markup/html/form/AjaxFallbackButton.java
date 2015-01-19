@@ -196,6 +196,7 @@ public abstract class AjaxFallbackButton extends Button
 	 * 
 	 * @return whether the link should be rendered as enabled
 	 */
+	//FIXME: this method is never called - sebfz1
 	protected final boolean isButtonEnabled()
 	{
 		return isEnabledInHierarchy();

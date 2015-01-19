@@ -153,7 +153,7 @@ public class ExternalLink extends AbstractLink
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy() == false)
+		if (!isLinkEnabled())
 		{
 			disableLink(tag);
 		}

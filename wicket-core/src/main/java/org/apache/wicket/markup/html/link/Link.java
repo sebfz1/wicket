@@ -352,8 +352,8 @@ public abstract class Link<T> extends AbstractLink implements ILinkListener, IGe
 		// Default handling for tag
 		super.onComponentTag(tag);
 
-		// If we're disabled
-		if (isEnabledInHierarchy())
+		// If we're enabled
+		if (isLinkEnabled())
 		{
 			// Set href to link to this link's linkClicked method
 			CharSequence url = getURL();

@@ -82,6 +82,16 @@ public abstract class AbstractLink extends WebMarkupContainer
 			super.onComponentTagBody(markupStream, openTag);
 		}
 	}
+	
+	/**
+	 * Indicates whether the link is enabled
+	 * 
+	 * @return {@link #isEnabledInHierarchy()} by default
+	 */
+	public boolean isLinkEnabled()
+	{
+		return isEnabledInHierarchy();
+	}
 
 	/**
 	 * Alters the tag so that the link renders as disabled.

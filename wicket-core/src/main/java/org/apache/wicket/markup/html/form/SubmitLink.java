@@ -156,7 +156,7 @@ public class SubmitLink extends AbstractSubmitLink
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy())
+		if (isLinkEnabled())
 		{
 			if (tag.getName().equalsIgnoreCase("a") || tag.getName().equalsIgnoreCase("link")
 				|| tag.getName().equalsIgnoreCase("area"))
