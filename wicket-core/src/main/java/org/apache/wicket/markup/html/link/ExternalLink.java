@@ -153,7 +153,7 @@ public class ExternalLink extends AbstractLink
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy() == false)
+		if (!isLinkEnabled())
 		{
 			disableLink(tag);
 		}
@@ -174,8 +174,9 @@ public class ExternalLink extends AbstractLink
 				}
 
 				// if the tag is an anchor proper
-				if (tag.getName().equalsIgnoreCase("a") || tag.getName().equalsIgnoreCase("link") ||
-					tag.getName().equalsIgnoreCase("area"))
+				String tagName = tag.getName();
+				
+				if ("a".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName))
 				{
 					// generate the href attribute
 					tag.put("href", url);

@@ -156,14 +156,15 @@ public class SubmitLink extends AbstractSubmitLink
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy())
+		if (isLinkEnabled())
 		{
-			if (tag.getName().equalsIgnoreCase("a") || tag.getName().equalsIgnoreCase("link")
-				|| tag.getName().equalsIgnoreCase("area"))
+			String tagName = tag.getName();
+			
+			if ("a".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName))
 			{
 				tag.put("href", "javascript:;");
 			}
-			else if (tag.getName().equalsIgnoreCase("button"))
+			else if ("button".equalsIgnoreCase(tagName))
 			{
 				// WICKET-5597 prevent default submit
 				tag.put("type", "button");

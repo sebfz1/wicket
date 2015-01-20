@@ -16,6 +16,8 @@
  */
 package org.apache.wicket.markup.html.link;
 
+import java.lang.reflect.Method;
+
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -81,6 +83,22 @@ public abstract class AbstractLink extends WebMarkupContainer
 			// Render the body of the link
 			super.onComponentTagBody(markupStream, openTag);
 		}
+	}
+	
+	/**
+	 * Indicates whether the link is enabled
+	 * 
+	 * @return {@link #isEnabledInHierarchy()} by default
+	 */
+	public boolean isLinkEnabled()
+	{
+		return isEnabledInHierarchy();
+	}
+	
+	@Override
+	public boolean canCallListenerInterface(Method method)
+	{
+		return isLinkEnabled() && isVisibleInHierarchy();
 	}
 
 	/**

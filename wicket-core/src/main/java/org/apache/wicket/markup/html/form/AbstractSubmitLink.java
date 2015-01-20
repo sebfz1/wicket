@@ -146,4 +146,15 @@ public abstract class AbstractSubmitLink extends AbstractLink implements IFormSu
 	{
 		return Form.getRootFormRelativeId(this);
 	}
+
+	/**
+	 * {@inheritDoc}<br/>
+	 * This method is marked as final because it is not possible to override this setting for form-submitting links
+	 * (ie: it is not possible to have an enabled submit-link in a disabled form) 
+	 */
+	@Override
+	public final boolean isLinkEnabled()
+	{
+		return super.isLinkEnabled();
+	}
 }

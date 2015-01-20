@@ -16,10 +16,12 @@
  */
 package org.apache.wicket.ajax.markup.html.form;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.ajax.form.AjaxFormSubmitBehavior;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.form.AbstractSubmitLink;
 import org.apache.wicket.markup.html.form.Form;
 import org.slf4j.Logger;
@@ -78,6 +80,15 @@ public abstract class AjaxSubmitLink extends AbstractSubmitLink
 		return new AjaxFormSubmitBehavior(form, event)
 		{
 			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				if (isLinkEnabled())
+				{		
+					super.renderHead(component, response);
+				}
+			}
 
 			@Override
 			protected void onError(AjaxRequestTarget target)
@@ -143,15 +154,16 @@ public abstract class AjaxSubmitLink extends AbstractSubmitLink
 	{
 		super.onComponentTag(tag);
 
-		if (isEnabledInHierarchy())
+		if (isLinkEnabled())
 		{
-			if (tag.getName().equalsIgnoreCase("a") || tag.getName().equalsIgnoreCase("link")
-				|| tag.getName().equalsIgnoreCase("area"))
+			String tagName = tag.getName();
+			
+			if ("a".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName))
 			{
 				// disable any href attr in markup
 				tag.put("href", "javascript:;");
 			}
-			else if (tag.getName().equalsIgnoreCase("button"))
+			else if ("button".equalsIgnoreCase(tagName))
 			{
 				// WICKET-5597 prevent default submit
 				tag.put("type", "button");

@@ -291,7 +291,7 @@ public abstract class Link<T> extends AbstractLink implements ILinkListener, IGe
 			}
 			else
 			{
-				if (tag.getName().equalsIgnoreCase("a"))
+				if ("a".equalsIgnoreCase(tag.getName()))
 				{
 					if (url.toString().indexOf('#') == -1)
 					{
@@ -352,18 +352,19 @@ public abstract class Link<T> extends AbstractLink implements ILinkListener, IGe
 		// Default handling for tag
 		super.onComponentTag(tag);
 
-		// If we're disabled
-		if (isEnabledInHierarchy())
+		// If we're enabled
+		if (isLinkEnabled())
 		{
 			// Set href to link to this link's linkClicked method
 			CharSequence url = getURL();
 
 			// append any anchor
 			url = appendAnchor(tag, url);
+			
+			String tagName = tag.getName();
 
 			// if the tag is an anchor proper
-			if (tag.getName().equalsIgnoreCase("a") || tag.getName().equalsIgnoreCase("link") ||
-				tag.getName().equalsIgnoreCase("area"))
+			if ("a".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName))
 			{
 				// generate the href attribute
 				tag.put("href", url);
@@ -376,8 +377,7 @@ public abstract class Link<T> extends AbstractLink implements ILinkListener, IGe
 					tag.put("onclick", popupSettings.getPopupJavaScript());
 				}
 			}
-			else if (tag.getName().equalsIgnoreCase("script") ||
-				tag.getName().equalsIgnoreCase("style"))
+			else if ("script".equalsIgnoreCase(tagName) || "style".equalsIgnoreCase(tagName))
 			{
 				tag.put("src", url);
 			}

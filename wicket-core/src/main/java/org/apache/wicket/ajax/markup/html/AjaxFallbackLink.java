@@ -16,10 +16,12 @@
  */
 package org.apache.wicket.ajax.markup.html;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
 import org.apache.wicket.markup.ComponentTag;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.IModel;
 
@@ -85,6 +87,15 @@ public abstract class AjaxFallbackLink<T> extends Link<T> implements IAjaxLink
 			private static final long serialVersionUID = 1L;
 
 			@Override
+			public void renderHead(Component component, IHeaderResponse response)
+			{
+				if (isLinkEnabled())
+				{		
+					super.renderHead(component, response);
+				}
+			}
+
+			@Override
 			protected void onEvent(AjaxRequestTarget target)
 			{
 				onClick(target);
@@ -141,16 +152,19 @@ public abstract class AjaxFallbackLink<T> extends Link<T> implements IAjaxLink
 		// Ajax links work with JavaScript Event registration
 		tag.remove("onclick");
 
-		String tagName = tag.getName();
-		if (isEnabledInHierarchy() &&
-			!("a".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName)))
+		if (isLinkEnabled())
 		{
-			String msg = String.format(
-				"%s must be used only with <a>, <area> or <link> markup elements. "
-					+ "The fallback functionality doesn't work for other markup elements. "
-					+ "Component path: %s, markup element: <%s>.",
-				AjaxFallbackLink.class.getSimpleName(), getClassRelativePath(), tagName);
-			findMarkupStream().throwMarkupException(msg);
+			String tagName = tag.getName();
+
+			if (!("a".equalsIgnoreCase(tagName) || "link".equalsIgnoreCase(tagName) || "area".equalsIgnoreCase(tagName)))
+			{
+				String msg = String.format(
+					"%s must be used only with <a>, <area> or <link> markup elements. "
+						+ "The fallback functionality doesn't work for other markup elements. "
+						+ "Component path: %s, markup element: <%s>.",
+					AjaxFallbackLink.class.getSimpleName(), getClassRelativePath(), tagName);
+				findMarkupStream().throwMarkupException(msg);
+			}
 		}
 	}
 }
