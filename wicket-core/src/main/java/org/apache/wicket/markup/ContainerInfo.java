@@ -49,6 +49,18 @@ public class ContainerInfo
 	}
 
 	/**
+	 * Construct from another {@code ContainerInfo}, with a specific containerClass (could be a parent class)
+	 * 
+	 * @param container
+	 *            The container to create the information from
+	 */
+	ContainerInfo(final Class<?> containerClass, ContainerInfo containerInfo)
+	{
+		this(containerClass != null ? containerClass : containerInfo.getContainerClass(), containerInfo.getLocale(), containerInfo.getStyle(),
+				containerInfo.getVariation(), containerInfo.getMarkupType());
+	}
+
+	/**
 	 * Construct.
 	 * 
 	 * @param containerClass
@@ -111,6 +123,15 @@ public class ContainerInfo
 	public String getVariation()
 	{
 		return variation;
+	}
+
+	/**
+	 * 
+	 * @return the markup-type
+	 */
+	private MarkupType getMarkupType()
+	{
+		return markupType;
 	}
 
 	/**

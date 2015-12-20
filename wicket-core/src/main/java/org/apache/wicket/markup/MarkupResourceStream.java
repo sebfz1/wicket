@@ -102,7 +102,7 @@ public class MarkupResourceStream implements IResourceStream, IFixedLocationReso
 		final ContainerInfo containerInfo, final Class<?> markupClass)
 	{
 		this.resourceStream = Args.notNull(resourceStream, "resourceStream");
-		this.containerInfo = containerInfo;
+		this.containerInfo = new ContainerInfo(markupClass, containerInfo);
 		markupClassName = markupClass == null ? null : markupClass.getName();
 
 		setWicketNamespace(MarkupParser.WICKET);
